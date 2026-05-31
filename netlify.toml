@@ -1,0 +1,19 @@
+# Netlify Configuration File
+# -------------------------------------------------------------
+# This file automates the build settings for Netlify so you
+# do not have to enter them manually in the web dashboard.
+
+[build]
+  # Tell Netlify to navigate to the frontend folder
+  base = "frontend"
+
+  # The exact build command to compile React Vite
+  command = "npm install && npm run build"
+
+  # The directory containing the compiled static website files (relative to "base")
+  publish = "dist"
+
+[build.environment]
+  # Ensure clean, speed-optimized dependency installs
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--no-audit --no-fund --legacy-peer-deps"
