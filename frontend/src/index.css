@@ -1,0 +1,64 @@
+:root {
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  /* Cyber Theme Colors */
+  --bg-dark: #030812;
+  --bg-panel: rgba(7, 18, 38, 0.75);
+  --bg-card: rgba(11, 27, 56, 0.6);
+  --border: rgba(0, 229, 255, 0.15);
+  --border-focus: rgba(0, 229, 255, 0.6);
+  
+  --accent: #00e5ff;
+  --accent-rgb: 0, 229, 255;
+  --safe: #00e5a0;
+  --safe-rgb: 0, 229, 160;
+  --danger: #ff3d6e;
+  --danger-rgb: 255, 61, 110;
+  --warning: #ffb300;
+  --warning-rgb: 255, 179, 0;
+
+  --text: #e1ebf5;
+  --text-dim: #7da0c4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Cyber Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 229, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 229, 255, 0.5);
+}
+
+#root {
+  min-height: 100vh;
+}
