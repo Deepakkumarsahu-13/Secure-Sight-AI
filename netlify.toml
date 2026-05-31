@@ -7,8 +7,11 @@
   # Tell Netlify to navigate to the frontend folder
   base = "frontend"
 
-  # The exact build command to compile React Vite
-  command = "npm install && npm run build"
+  # BULLETPROOF BUILD COMMAND:
+  # 1. Installs clean node_modules
+  # 2. Fixes Linux execute permissions on the Vite binary if tracked in Git
+  # 3. Compiles the optimized React production bundle
+  command = "npm install && (chmod +x node_modules/.bin/vite || true) && npm run build"
 
   # The directory containing the compiled static website files (relative to "base")
   publish = "dist"
