@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './App.css';
 
-const API = 'http://localhost:5000';
+const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000'
+  : '/api';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 const fmtTime = (iso) => {
