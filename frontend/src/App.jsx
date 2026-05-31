@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './App.css';
 
+// 💡 If deploying frontend to Netlify, host your Flask backend on Render.com and paste your Render URL below!
+const PRODUCTION_BACKEND_URL = 'https://YOUR-BACKEND-URL-HERE.onrender.com'; 
+
 const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:5000'
-  : '/api';
+  : PRODUCTION_BACKEND_URL;
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 const fmtTime = (iso) => {
