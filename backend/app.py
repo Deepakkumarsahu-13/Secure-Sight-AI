@@ -1049,6 +1049,13 @@ Context about user's current session scans: {context}"""
 def serve_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        'message': 'Secure Sight AI Backend is running successfully!',
+        'version': '3.0'
+    }), 200
+
 @app.route('/health', methods=['GET'])
 def health():
     api_key_set = bool(os.environ.get('ANTHROPIC_API_KEY'))
