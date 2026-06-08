@@ -1,11 +1,13 @@
-# Use a lightweight official Python image
-FROM python:3.11-slim
+# Use a highly stable official Python Bookworm image
+FROM python:3.11-slim-bookworm
 
-# Install system dependencies (Tesseract OCR & OpenCV libraries)
-RUN apt-get update && apt-get install -y \
+# Prevent apt configuration prompts from blocking the build
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Tesseract OCR (headless opencv-python does not require libgl1/libglib)
+RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
