@@ -892,7 +892,7 @@ def blur_image():
 
     return jsonify({
         'blurred_filename': blurred_filename,
-        'blurred_url':      f"http://localhost:5000/uploads/{blurred_filename}",
+        'blurred_url':      f"{request.host_url}uploads/{blurred_filename}",
         'regions_blurred':  len(regions)
     }), 200
 
