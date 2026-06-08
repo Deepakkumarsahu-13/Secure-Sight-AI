@@ -1,0 +1,37 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# Python Virtual Environment
+venv/
+.venv/
+env/
+.env
+*.pyc
+__pycache__/
+
+# Local Uploads and scan databases
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/history.json
+backend/settings.json
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS metadata files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files and dumps
+*.log
+*.stackdump
+.tempmediaStorage/
