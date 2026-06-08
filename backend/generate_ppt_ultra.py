@@ -7,6 +7,8 @@ from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.oxml.xmlchemy import OxmlElement
+from pptx.chart.data import CategoryChartData
+from pptx.enum.chart import XL_CHART_TYPE
 
 def create_ultra_presentation():
     prs = Presentation()
@@ -928,6 +930,180 @@ def create_ultra_presentation():
     p_v5.font.size = Pt(14)
     p_v5.font.color.rgb = TEXT_SLATE
     p_v5.space_before = Pt(6)
+
+    # ==========================================================================
+    # SLIDE 15: Future Vision: Advancing Privacy Technology (ROADMAP & CHART)
+    # ==========================================================================
+    slide15 = prs.slides.add_slide(slide_layout)
+    set_slide_bg(slide15)
+    add_transition(slide15, "push")
+    add_header(slide15, "Future Vision: Advancing Privacy Technology", "6. ROADMAP & FUTURE VISION")
+
+    # Left Column: Introduction
+    intro_box = slide15.shapes.add_textbox(Inches(0.75), Inches(1.7), Inches(5.0), Inches(0.8))
+    tf_intro = intro_box.text_frame
+    tf_intro.word_wrap = True
+    tf_intro.margin_left = tf_intro.margin_right = tf_intro.margin_top = tf_intro.margin_bottom = 0
+    p_intro = tf_intro.paragraphs[0]
+    p_intro.text = "SecureSight AI is committed to continuous innovation, moving beyond static analysis to real-time, edge-based privacy protection."
+    p_intro.font.name = 'Arial'
+    p_intro.font.size = Pt(13)
+    p_intro.font.color.rgb = TEXT_SLATE
+
+    # Left Column: Key Insight Box (Background Card + Accent Line + Text Box)
+    add_card_shape(slide15, Inches(0.75), Inches(2.6), Inches(5.0), Inches(1.3), border_color=CARD_BORDER)
+    
+    # Left accent line (blue vertical bar)
+    accent_bar = slide15.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.75), Inches(2.6), Inches(0.08), Inches(1.3))
+    accent_bar.fill.solid()
+    accent_bar.fill.fore_color.rgb = ACCENT_BLUE
+    accent_bar.line.fill.background() # No border line
+
+    insight_box = slide15.shapes.add_textbox(Inches(0.95), Inches(2.65), Inches(4.7), Inches(1.2))
+    tf_insight = insight_box.text_frame
+    tf_insight.word_wrap = True
+    tf_insight.margin_left = tf_insight.margin_right = tf_insight.margin_top = tf_insight.margin_bottom = 0
+    
+    p_in_t = tf_insight.paragraphs[0]
+    p_in_t.text = "Key Insight"
+    p_in_t.font.name = 'Arial'
+    p_in_t.font.size = Pt(13)
+    p_in_t.font.bold = True
+    p_in_t.font.color.rgb = TEXT_NAVY
+    
+    p_in_b = tf_insight.add_paragraph()
+    p_in_b.text = "SecureSight AI transforms privacy protection from a reactive process into a proactive, AI-driven security shield for strategic environments."
+    p_in_b.font.name = 'Arial'
+    p_in_b.font.size = Pt(11)
+    p_in_b.font.color.rgb = TEXT_SLATE
+    p_in_b.space_before = Pt(4)
+
+    # Left Column: Strategic Roadmap Enhancements Bullet List
+    roadmap_box = slide15.shapes.add_textbox(Inches(0.75), Inches(4.1), Inches(5.0), Inches(2.0))
+    tf_rm = roadmap_box.text_frame
+    tf_rm.word_wrap = True
+    tf_rm.margin_left = tf_rm.margin_right = tf_rm.margin_top = tf_rm.margin_bottom = 0
+    
+    p_rm_t = tf_rm.paragraphs[0]
+    p_rm_t.text = "Strategic Roadmap Enhancements:"
+    p_rm_t.font.name = 'Arial'
+    p_rm_t.font.size = Pt(13)
+    p_rm_t.font.bold = True
+    p_rm_t.font.color.rgb = TEXT_NAVY
+    
+    bullets = [
+        ("Edge Deployment", "Real-time camera protection on mobile devices."),
+        ("Live Video Analysis", "Continuous monitoring of high-stakes video streams."),
+        ("Cloud Integration", "Secure, scalable cloud-native privacy gateways."),
+        ("Predictive AI", "Machine learning to predict and prevent threat patterns.")
+    ]
+    
+    for title, desc in bullets:
+        p_b = tf_rm.add_paragraph()
+        p_b.space_before = Pt(6)
+        
+        r1 = p_b.add_run()
+        r1.text = f"• {title}: "
+        r1.font.name = 'Arial'
+        r1.font.bold = True
+        r1.font.size = Pt(12)
+        r1.font.color.rgb = TEXT_NAVY
+        
+        r2 = p_b.add_run()
+        r2.text = desc
+        r2.font.name = 'Arial'
+        r2.font.bold = False
+        r2.font.size = Pt(12)
+        r2.font.color.rgb = TEXT_SLATE
+
+    # Left Column: Footer Text
+    footer_box = slide15.shapes.add_textbox(Inches(0.75), Inches(6.3), Inches(5.0), Inches(0.6))
+    tf_foot = footer_box.text_frame
+    tf_foot.word_wrap = True
+    tf_foot.margin_left = tf_foot.margin_right = tf_foot.margin_top = tf_foot.margin_bottom = 0
+    p_foot = tf_foot.paragraphs[0]
+    p_foot.text = "By 2030, we aim to provide a 100% automated, zero-latency privacy perimeter for all defense and civilian applications."
+    p_foot.font.name = 'Arial'
+    p_foot.font.size = Pt(12.5)
+    p_foot.font.bold = True
+    p_foot.font.color.rgb = TEXT_NAVY
+
+    # Right Column: Bar Chart
+    chart_data = CategoryChartData()
+    chart_data.categories = ['2026', '2027', '2028', '2029', '2030']
+    chart_data.add_series('Security Efficiency', (0.85, 0.91, 0.95, 0.97, 1.00))
+    
+    x, y, cx, cy = Inches(6.25), Inches(1.6), Inches(6.0), Inches(3.7)
+    chart_shape = slide15.shapes.add_chart(
+        XL_CHART_TYPE.COLUMN_CLUSTERED, x, y, cx, cy, chart_data
+    )
+    chart = chart_shape.chart
+    chart.has_legend = False
+    
+    # Chart Title
+    chart.has_title = True
+    chart.chart_title.text_frame.text = "Projected Security Efficiency Growth (2026-2030)"
+    p_ct = chart.chart_title.text_frame.paragraphs[0]
+    p_ct.font.name = 'Arial'
+    p_ct.font.size = Pt(11.5)
+    p_ct.font.bold = True
+    p_ct.font.color.rgb = TEXT_NAVY
+    
+    # Value Axis (Y-axis) settings
+    val_axis = chart.value_axis
+    val_axis.minimum_scale = 0.0
+    val_axis.maximum_scale = 1.0
+    val_axis.number_format = '0%'
+    val_axis.has_major_gridlines = True
+    
+    # Set custom colors for each bar to match the gradient in the image
+    series = chart.series[0]
+    colors = [
+        RGBColor(219, 234, 254), # 2026 - Very light blue
+        RGBColor(191, 219, 254), # 2027 - Light blue
+        RGBColor(147, 197, 253), # 2028 - Medium light blue
+        RGBColor(96, 165, 250),  # 2029 - Medium blue
+        RGBColor(37, 99, 235)    # 2030 - Royal blue (ACCENT_BLUE)
+    ]
+    for idx, color in enumerate(colors):
+        fill = series.points[idx].format.fill
+        fill.solid()
+        fill.fore_color.rgb = color
+
+    # Source label under the chart
+    src_box = slide15.shapes.add_textbox(Inches(6.25), Inches(5.35), Inches(6.0), Inches(0.3))
+    tf_src = src_box.text_frame
+    tf_src.margin_left = tf_src.margin_right = tf_src.margin_top = tf_src.margin_bottom = 0
+    p_src = tf_src.paragraphs[0]
+    p_src.text = "Source: SecureSight AI Strategic Roadmap, 2026"
+    p_src.font.name = 'Arial'
+    p_src.font.size = Pt(9)
+    p_src.font.italic = True
+    p_src.font.color.rgb = TEXT_SLATE
+
+    # Edge-AI Integration Box (Right Bottom)
+    add_card_shape(slide15, Inches(6.25), Inches(5.7), Inches(6.0), Inches(1.1), border_color=CARD_BORDER)
+    edge_box = slide15.shapes.add_textbox(Inches(6.35), Inches(5.75), Inches(5.8), Inches(1.0))
+    tf_edge = edge_box.text_frame
+    tf_edge.word_wrap = True
+    tf_edge.margin_left = tf_edge.margin_right = tf_edge.margin_top = tf_edge.margin_bottom = 0
+    
+    p_ed_t = tf_edge.paragraphs[0]
+    p_ed_t.text = "Edge-AI Integration"
+    p_ed_t.font.name = 'Arial'
+    p_ed_t.font.size = Pt(12)
+    p_ed_t.font.bold = True
+    p_ed_t.font.color.rgb = TEXT_NAVY
+    p_ed_t.alignment = PP_ALIGN.CENTER
+    
+    p_ed_b = tf_edge.add_paragraph()
+    p_ed_b.text = "Bringing high-performance security to the point of capture"
+    p_ed_b.font.name = 'Arial'
+    p_ed_b.font.size = Pt(10)
+    p_ed_b.font.italic = True
+    p_ed_b.font.color.rgb = TEXT_SLATE
+    p_ed_b.space_before = Pt(4)
+    p_ed_b.alignment = PP_ALIGN.CENTER
 
     # ── SAVE FILE ─────────────────────────────────────────────────────────────
     filepath = r"C:\Users\DEEPAK\.gemini\antigravity\scratch\Secure_Sight_AI_Presentation.pptx"
