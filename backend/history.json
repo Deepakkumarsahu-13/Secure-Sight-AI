@@ -1,93 +1,25 @@
 [
   {
-    "id": "2d91945c",
-    "timestamp": "2026-06-08T23:51:18",
-    "filename": "1780942876_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
+    "id": "4e875328",
+    "timestamp": "2026-06-09T00:42:51",
+    "filename": "1780945968_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
     "document_type": "unknown",
     "keywords": [
-      "weapon",
       "person"
     ],
     "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1780942876_images.jpg"
+    "regions_count": 0
   },
   {
-    "id": "7630cc28",
-    "timestamp": "2026-06-08T23:51:02",
-    "filename": "1780942858_download.jpg",
-    "original_name": "download.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1780942858_download.jpg"
-  },
-  {
-    "id": "6fe7c363",
-    "timestamp": "2026-06-01T01:40:35",
-    "filename": "1780258233_1743777362_new-project-1.jpg",
-    "original_name": "1743777362_new-project-1.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "weapon",
-      "dob",
-      "gender",
-      "aadhaar",
-      "bus",
-      "person"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 4,
-    "blurred": true,
-    "blurred_file": "blurred_1780258233_1743777362_new-project-1.jpg"
-  },
-  {
-    "id": "f75e0992",
-    "timestamp": "2026-06-01T01:20:31",
-    "filename": "1780257027_Screenshot_2025-10-09_214427.png",
-    "original_name": "Screenshot_2025-10-09_214427.png",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon",
-      "gender",
-      "phone",
-      "email",
-      "name",
-      "bus",
-      "person"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 8,
-    "blurred": true,
-    "blurred_file": "blurred_1780257027_Screenshot_2025-10-09_214427.png"
-  },
-  {
-    "id": "d1493131",
-    "timestamp": "2026-05-31T23:37:58",
-    "filename": "1780250877_1djfbkj.jpg",
-    "original_name": "1djfbkj.jpg",
+    "id": "42610933",
+    "timestamp": "2026-06-09T00:42:50",
+    "filename": "1780945967_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
@@ -95,761 +27,584 @@
     "document_type": "unknown",
     "keywords": [
       "person",
-      "aeroplane"
+      "chair"
     ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "8a1b350a",
-    "timestamp": "2026-05-31T23:37:37",
-    "filename": "1780250853_german-tank.jpg",
-    "original_name": "german-tank.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon",
-      "aeroplane"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1780250853_german-tank.jpg"
-  },
-  {
-    "id": "4bda06d6",
-    "timestamp": "2026-05-31T22:38:33",
-    "filename": "1780247311_german-tank.jpg",
-    "original_name": "german-tank.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon",
-      "aeroplane"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 6,
-    "blurred": true,
-    "blurred_file": "blurred_1780247311_german-tank.jpg"
-  },
-  {
-    "id": "afa8185c",
-    "timestamp": "2026-05-31T22:37:49",
-    "filename": "1780247263_1djfbkj.jpg",
-    "original_name": "1djfbkj.jpg",
+    "id": "98321e73",
+    "timestamp": "2026-06-09T00:42:49",
+    "filename": "1780945966_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
     "keywords": [
-      "person",
-      "aeroplane"
+      "pottedplant",
+      "bottle",
+      "person"
     ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "29c6d46f",
-    "timestamp": "2026-05-30T15:33:26",
-    "filename": "1780135401_gettyimages-2221587600-1024x1024.jpg",
-    "original_name": "gettyimages-2221587600-1024x1024.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon",
-      "person"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 8,
-    "blurred": true,
-    "blurred_file": "blurred_1780135401_gettyimages-2221587600-1024x1024.jpg"
-  },
-  {
-    "id": "9e90b387",
-    "timestamp": "2026-05-29T21:15:28",
-    "filename": "1780069527_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon",
-      "person"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1780069527_images.jpg"
-  },
-  {
-    "id": "48f94096",
-    "timestamp": "2026-05-29T21:10:12",
-    "filename": "1780069211_1743777362_new-project-1.jpg",
-    "original_name": "1743777362_new-project-1.jpg",
-    "is_sensitive": true,
+    "id": "1dea4665",
+    "timestamp": "2026-06-09T00:42:49",
+    "filename": "1780945966_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
-    "confidence": 85,
-    "document_type": "Aadhaar Card",
+    "confidence": 8,
+    "document_type": "unknown",
     "keywords": [
-      "dob",
-      "gender",
-      "aadhaar",
-      "bus",
+      "pottedplant",
+      "bottle",
       "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "c3540fd3",
+    "timestamp": "2026-06-09T00:42:48",
+    "filename": "1780945965_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "bottle",
+      "pottedplant",
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "11555493",
+    "timestamp": "2026-06-09T00:42:47",
+    "filename": "1780945964_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "bottle",
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "99e31aff",
+    "timestamp": "2026-06-09T00:42:46",
+    "filename": "1780945964_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "bottle",
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "6c40fb63",
+    "timestamp": "2026-06-09T00:42:45",
+    "filename": "1780945963_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "bottle"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "1ee9ccdb",
+    "timestamp": "2026-06-09T00:42:44",
+    "filename": "1780945962_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "529210be",
+    "timestamp": "2026-06-09T00:42:44",
+    "filename": "1780945961_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "bottle"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "7c1de9ee",
+    "timestamp": "2026-06-09T00:42:43",
+    "filename": "1780945961_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "bottle"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "6f4286df",
+    "timestamp": "2026-06-09T00:42:42",
+    "filename": "1780945960_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "e825812c",
+    "timestamp": "2026-06-09T00:42:10",
+    "filename": "1780945928_IMG-20260609-WA0002.jpg",
+    "original_name": "IMG-20260609-WA0002.jpg",
+    "is_sensitive": true,
+    "is_illegal": true,
+    "illegal_type": "weapon",
+    "confidence": 99,
+    "document_type": "unknown",
+    "keywords": [
+      "weapon",
+      "aeroplane"
     ],
     "method": "ocr-fallback",
     "regions_count": 3,
     "blurred": true,
-    "blurred_file": "blurred_1780069211_1743777362_new-project-1.jpg"
+    "blurred_file": "blurred_1780945928_IMG-20260609-WA0002.jpg"
   },
   {
-    "id": "67810fbd",
-    "timestamp": "2026-05-29T21:06:18",
-    "filename": "1780068977_26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "original_name": "26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "weapon",
-      "name",
-      "dob",
-      "aadhaar",
-      "bus"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 4,
-    "blurred": true,
-    "blurred_file": "blurred_1780068977_26110f0c8ea92d2360b5c3b05cd77b97.jpg"
-  },
-  {
-    "id": "ddc3df94",
-    "timestamp": "2026-05-29T19:58:29",
-    "filename": "1780064907_gettyimages-2221587600-1024x1024.jpg",
-    "original_name": "gettyimages-2221587600-1024x1024.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
+    "id": "d126b39d",
+    "timestamp": "2026-06-09T00:41:58",
+    "filename": "1780945916_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
     "document_type": "unknown",
     "keywords": [
-      "weapon",
       "person"
     ],
     "method": "ocr-fallback",
-    "regions_count": 8,
-    "blurred": true,
-    "blurred_file": "blurred_1780064907_gettyimages-2221587600-1024x1024.jpg"
+    "regions_count": 0
   },
   {
-    "id": "d2c0d125",
-    "timestamp": "2026-05-29T19:58:04",
-    "filename": "1780064882_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
+    "id": "1ae37372",
+    "timestamp": "2026-06-09T00:41:57",
+    "filename": "1780945915_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
     "document_type": "unknown",
     "keywords": [
-      "weapon",
       "person"
     ],
     "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1780064882_images.jpg"
+    "regions_count": 0
   },
   {
-    "id": "91648732",
-    "timestamp": "2026-05-29T19:57:16",
-    "filename": "1780064835_gettyimages-2221587600-1024x1024.jpg",
-    "original_name": "gettyimages-2221587600-1024x1024.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
+    "id": "293d0117",
+    "timestamp": "2026-06-09T00:41:56",
+    "filename": "1780945914_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
     "document_type": "unknown",
     "keywords": [
-      "weapon",
       "person"
     ],
     "method": "ocr-fallback",
-    "regions_count": 8,
-    "blurred": true,
-    "blurred_file": "blurred_1780064835_gettyimages-2221587600-1024x1024.jpg"
+    "regions_count": 0
   },
   {
-    "id": "d5637743",
-    "timestamp": "2026-05-29T19:55:24",
-    "filename": "1780064723_v6ox2910i8te1.png",
-    "original_name": "v6ox2910i8te1.png",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
+    "id": "22926b7c",
+    "timestamp": "2026-06-09T00:41:56",
+    "filename": "1780945914_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
     "document_type": "unknown",
     "keywords": [
-      "weapon",
-      "motorbike",
       "person"
     ],
     "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1780064723_v6ox2910i8te1.png"
+    "regions_count": 0
   },
   {
-    "id": "73945ea5",
-    "timestamp": "2026-05-29T14:57:01",
-    "filename": "1780046819_v6ox2910i8te1.png",
-    "original_name": "v6ox2910i8te1.png",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 6,
-    "blurred": true,
-    "blurred_file": "blurred_1780046819_v6ox2910i8te1.png"
-  },
-  {
-    "id": "df0ea8e4",
-    "timestamp": "2026-05-29T14:56:39",
-    "filename": "1780046798_gettyimages-2221587600-1024x1024.jpg",
-    "original_name": "gettyimages-2221587600-1024x1024.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 8,
-    "blurred": true,
-    "blurred_file": "blurred_1780046798_gettyimages-2221587600-1024x1024.jpg"
-  },
-  {
-    "id": "1a97fd95",
-    "timestamp": "2026-05-29T14:28:38",
-    "filename": "1780045118_gettyimages-2221587600-1024x1024.jpg",
-    "original_name": "gettyimages-2221587600-1024x1024.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1780045118_gettyimages-2221587600-1024x1024.jpg"
-  },
-  {
-    "id": "0c3631fe",
-    "timestamp": "2026-05-29T14:27:58",
-    "filename": "1780045077_v6ox2910i8te1.png",
-    "original_name": "v6ox2910i8te1.png",
+    "id": "9b10b105",
+    "timestamp": "2026-06-09T00:41:55",
+    "filename": "1780945913_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "a9bf6fdd",
-    "timestamp": "2026-05-29T14:25:20",
-    "filename": "1780044919_v6ox2910i8te1.png",
-    "original_name": "v6ox2910i8te1.png",
+    "id": "fdcf40be",
+    "timestamp": "2026-06-09T00:41:54",
+    "filename": "1780945912_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person",
+      "pottedplant"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "86e23585",
-    "timestamp": "2026-05-29T14:24:20",
-    "filename": "1780044859_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1780044859_images.jpg"
-  },
-  {
-    "id": "1f6367c5",
-    "timestamp": "2026-05-29T13:52:31",
-    "filename": "1780042949_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1780042949_images.jpg"
-  },
-  {
-    "id": "7a586903",
-    "timestamp": "2026-05-28T22:11:32",
-    "filename": "1779986488_A.png",
-    "original_name": "A.png",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 95,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "enrollment",
-      "mobile",
-      "aadhaar",
-      "birth",
-      "dob",
-      "address"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 9,
-    "blurred": true,
-    "blurred_file": "blurred_1779986488_A.png"
-  },
-  {
-    "id": "92022fc5",
-    "timestamp": "2026-05-28T22:11:04",
-    "filename": "1779986463_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 1,
-    "blurred": true,
-    "blurred_file": "blurred_1779986463_images.jpg"
-  },
-  {
-    "id": "14c40367",
-    "timestamp": "2026-05-28T22:02:55",
-    "filename": "1779985970_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 5,
-    "blurred": true,
-    "blurred_file": "blurred_1779985970_images.jpg"
-  },
-  {
-    "id": "b4fdeec6",
-    "timestamp": "2026-05-28T21:03:00",
-    "filename": "1779982379_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779982379_images.jpg"
-  },
-  {
-    "id": "1290c065",
-    "timestamp": "2026-05-28T21:02:44",
-    "filename": "1779982363_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779982363_images.jpg"
-  },
-  {
-    "id": "1bad3c49",
-    "timestamp": "2026-05-28T21:02:26",
-    "filename": "1779982344_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779982344_images.jpg"
-  },
-  {
-    "id": "6e584c74",
-    "timestamp": "2026-05-28T20:07:34",
-    "filename": "1779979053_26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "original_name": "26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 85,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "name",
-      "dob",
-      "aadhaar"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779979053_26110f0c8ea92d2360b5c3b05cd77b97.jpg"
-  },
-  {
-    "id": "291db63f",
-    "timestamp": "2026-05-28T20:06:14",
-    "filename": "1779978973_download.jpg",
-    "original_name": "download.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779978973_download.jpg"
-  },
-  {
-    "id": "21ebb899",
-    "timestamp": "2026-05-28T20:04:20",
-    "filename": "1779978858_images.jpg",
-    "original_name": "images.jpg",
-    "is_sensitive": true,
-    "is_illegal": true,
-    "illegal_type": "weapon",
-    "confidence": 99,
-    "document_type": "unknown",
-    "keywords": [
-      "weapon"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779978858_images.jpg"
-  },
-  {
-    "id": "184726a8",
-    "timestamp": "2026-05-28T17:54:13",
-    "filename": "1779971052_images.jpg",
-    "original_name": "images.jpg",
+    "id": "21b09188",
+    "timestamp": "2026-06-09T00:41:53",
+    "filename": "1780945911_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "6237f2b2",
-    "timestamp": "2026-05-28T17:53:10",
-    "filename": "1779970988_26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "original_name": "26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 85,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "name",
-      "dob",
-      "aadhaar"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779970988_26110f0c8ea92d2360b5c3b05cd77b97.jpg"
-  },
-  {
-    "id": "046feecb",
-    "timestamp": "2026-05-28T17:52:59",
-    "filename": "1779970974_download.jpg",
-    "original_name": "download.jpg",
+    "id": "00491d6a",
+    "timestamp": "2026-06-09T00:41:53",
+    "filename": "1780945911_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "7ee84b1f",
-    "timestamp": "2026-05-28T16:32:40",
-    "filename": "1779966159_download.jpg",
-    "original_name": "download.jpg",
+    "id": "ce72ccf7",
+    "timestamp": "2026-06-09T00:41:52",
+    "filename": "1780945910_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "6f335b84",
-    "timestamp": "2026-05-28T16:32:15",
-    "filename": "1779966134_26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "original_name": "26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 85,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "name",
-      "dob",
-      "aadhaar"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779966134_26110f0c8ea92d2360b5c3b05cd77b97.jpg"
-  },
-  {
-    "id": "42e75e27",
-    "timestamp": "2026-05-28T13:34:19",
-    "filename": "1779955458_download.jpg",
-    "original_name": "download.jpg",
+    "id": "7d8ead8f",
+    "timestamp": "2026-06-09T00:41:52",
+    "filename": "1780945909_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "64913c82",
-    "timestamp": "2026-05-28T13:33:10",
-    "filename": "1779955383_A.png",
-    "original_name": "A.png",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 95,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "enrollment",
-      "mobile",
-      "aadhaar",
-      "birth",
-      "dob",
-      "address"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 10,
-    "blurred": true,
-    "blurred_file": "blurred_1779955383_A.png"
-  },
-  {
-    "id": "31066730",
-    "timestamp": "2026-05-28T09:51:49",
-    "filename": "1779942106_A.png",
-    "original_name": "A.png",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 95,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "enrollment",
-      "mobile",
-      "aadhaar",
-      "birth",
-      "dob",
-      "address"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 10,
-    "blurred": true,
-    "blurred_file": "blurred_1779942106_A.png"
-  },
-  {
-    "id": "aa3f9b72",
-    "timestamp": "2026-05-28T09:51:26",
-    "filename": "1779942085_26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "original_name": "26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 70,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "dob",
-      "aadhaar"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779942085_26110f0c8ea92d2360b5c3b05cd77b97.jpg"
-  },
-  {
-    "id": "6f1d64d5",
-    "timestamp": "2026-05-28T09:51:15",
-    "filename": "1779942073_download.jpg",
-    "original_name": "download.jpg",
+    "id": "52955fde",
+    "timestamp": "2026-06-09T00:41:51",
+    "filename": "1780945909_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "a71f64b5",
-    "timestamp": "2026-05-28T09:33:25",
-    "filename": "1779941003_26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "original_name": "26110f0c8ea92d2360b5c3b05cd77b97.jpg",
-    "is_sensitive": true,
-    "is_illegal": false,
-    "illegal_type": "none",
-    "confidence": 70,
-    "document_type": "Aadhaar Card",
-    "keywords": [
-      "dob",
-      "aadhaar"
-    ],
-    "method": "ocr-fallback",
-    "regions_count": 2,
-    "blurred": true,
-    "blurred_file": "blurred_1779941003_26110f0c8ea92d2360b5c3b05cd77b97.jpg"
-  },
-  {
-    "id": "de1beeac",
-    "timestamp": "2026-05-28T09:32:41",
-    "filename": "1779940960_download.jpg",
-    "original_name": "download.jpg",
+    "id": "19531b36",
+    "timestamp": "2026-06-09T00:41:50",
+    "filename": "1780945908_live_frame.jpg",
+    "original_name": "live_frame.jpg",
     "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
     "confidence": 8,
     "document_type": "unknown",
-    "keywords": [],
+    "keywords": [
+      "person"
+    ],
     "method": "ocr-fallback",
     "regions_count": 0
   },
   {
-    "id": "57e4caaa",
-    "timestamp": "2026-05-28T09:30:02",
-    "filename": "1779940799_A.png",
-    "original_name": "A.png",
-    "is_sensitive": true,
+    "id": "aa93aad6",
+    "timestamp": "2026-06-09T00:41:49",
+    "filename": "1780945907_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
-    "confidence": 95,
-    "document_type": "Aadhaar Card",
+    "confidence": 8,
+    "document_type": "unknown",
     "keywords": [
-      "aadhaar",
-      "birth",
-      "dob",
-      "address"
+      "person"
     ],
     "method": "ocr-fallback",
-    "regions_count": 7,
-    "blurred": true,
-    "blurred_file": "blurred_1779940799_A.png"
+    "regions_count": 0
   },
   {
-    "id": "3c1e9afd",
-    "timestamp": "2026-05-28T08:12:02",
-    "filename": "1779936118_A.png",
-    "original_name": "A.png",
-    "is_sensitive": true,
+    "id": "727e394a",
+    "timestamp": "2026-06-09T00:41:48",
+    "filename": "1780945907_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
     "is_illegal": false,
     "illegal_type": "none",
-    "confidence": 95,
-    "document_type": "Aadhaar Card",
+    "confidence": 8,
+    "document_type": "unknown",
     "keywords": [
-      "email",
-      "aadhaar",
-      "birth",
-      "dob",
-      "address"
+      "person"
     ],
     "method": "ocr-fallback",
-    "regions_count": 12,
-    "blurred": true,
-    "blurred_file": "blurred_1779936118_A.png"
+    "regions_count": 0
+  },
+  {
+    "id": "a3e74ae0",
+    "timestamp": "2026-06-09T00:41:48",
+    "filename": "1780945906_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "person",
+      "bottle"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "d97166cd",
+    "timestamp": "2026-06-09T00:41:47",
+    "filename": "1780945905_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "pottedplant",
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "eae4f62c",
+    "timestamp": "2026-06-09T00:41:46",
+    "filename": "1780945904_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "pottedplant"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "15010f53",
+    "timestamp": "2026-06-09T00:41:46",
+    "filename": "1780945904_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "pottedplant"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "744cb100",
+    "timestamp": "2026-06-09T00:41:43",
+    "filename": "1780945900_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "pottedplant"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "8a17a363",
+    "timestamp": "2026-06-09T00:41:42",
+    "filename": "1780945899_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "3f859302",
+    "timestamp": "2026-06-09T00:41:41",
+    "filename": "1780945898_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "de37fea8",
+    "timestamp": "2026-06-09T00:41:40",
+    "filename": "1780945898_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "27249d8d",
+    "timestamp": "2026-06-09T00:41:39",
+    "filename": "1780945897_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "pottedplant"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
+  },
+  {
+    "id": "ed03a932",
+    "timestamp": "2026-06-09T00:41:39",
+    "filename": "1780945896_live_frame.jpg",
+    "original_name": "live_frame.jpg",
+    "is_sensitive": false,
+    "is_illegal": false,
+    "illegal_type": "none",
+    "confidence": 8,
+    "document_type": "unknown",
+    "keywords": [
+      "person",
+      "pottedplant"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 0
   }
 ]

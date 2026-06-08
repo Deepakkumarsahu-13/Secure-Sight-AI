@@ -148,6 +148,38 @@ function App() {
   const [chatLoading, setChatLoading]     = useState(false);
   const chatEndRef = useRef();
 
+  // ── Live Guard Camera state ────────────────────────────────────────────────
+  const [isGuardActive, setIsGuardActive] = useState(false);
+  const [detectedRegions, setDetectedRegions] = useState([]);
+  const [threatCount, setThreatCount]     = useState(0);
+  const [piiCount, setPiiCount]           = useState(0);
+  const [isThreatActive, setIsThreatActive] = useState(false);
+
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const intervalRef = useRef(null);
+  const regionsRef = useRef([]);
+
+  // Keep regionsRef updated for the animation frame loop
+  useEffect(() => {
+    regionsRef.current = detectedRegions;
+  }, [detectedRegions]);
+
+  // Deactivate camera on tab change or unmount
+  useEffect(() => {
+    if (activeTab !== 'camera') {
+      stopCamera();
+    }
+  }, [activeTab]);
+
+  useEffect(() => {
+    return () => {
+      stopCamera();
+    };
+  }, []);
+
   // ── Load data on tab change ────────────────────────────────────────────────
   useEffect(() => {
     if (activeTab === 'history') fetchHistory();
@@ -330,6 +362,175 @@ function App() {
     } catch {}
   };
 
+  // ── Live Guard Camera logic ────────────────────────────────────────────────
+  const startCamera = async () => {
+    setDetectedRegions([]);
+    setThreatCount(0);
+    setPiiCount(0);
+    setIsThreatActive(false);
+    
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { width: { ideal: 640 }, height: { ideal: 480 } }
+      });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current.play().then(() => {
+            setIsGuardActive(true);
+            startRenderLoop();
+            startAnalysisLoop();
+          }).catch(err => {
+            console.error("Video play failed:", err);
+          });
+        };
+      }
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      alert("Could not access webcam. Please check camera permissions in your browser.");
+    }
+  };
+
+  const stopCamera = () => {
+    setIsGuardActive(false);
+    setIsThreatActive(false);
+    setDetectedRegions([]);
+    
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  const startRenderLoop = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    const render = () => {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        ctx.filter = 'none';
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const currentRegions = regionsRef.current;
+        currentRegions.forEach(r => {
+          const rx = r.x * canvas.width;
+          const ry = r.y * canvas.height;
+          const rw = r.w * canvas.width;
+          const rh = r.h * canvas.height;
+          
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(rx, ry, rw, rh);
+          ctx.clip();
+          ctx.filter = 'blur(15px)';
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          ctx.restore();
+          
+          ctx.strokeStyle = r.isIllegal ? '#ff3d6e' : '#ffb300';
+          ctx.lineWidth = 3;
+          ctx.strokeRect(rx, ry, rw, rh);
+          
+          ctx.fillStyle = r.isIllegal ? 'rgba(255, 61, 110, 0.85)' : 'rgba(255, 179, 0, 0.85)';
+          const text = `${r.label.toUpperCase()} (${r.confidence}%)`;
+          ctx.font = 'bold 12px monospace';
+          const textWidth = ctx.measureText(text).width;
+          const labelY = ry - 20 >= 0 ? ry - 20 : ry;
+          ctx.fillRect(rx, labelY, textWidth + 10, 20);
+          
+          ctx.fillStyle = '#030812';
+          ctx.fillText(text, rx + 5, labelY + 14);
+        });
+      }
+      animationFrameRef.current = requestAnimationFrame(render);
+    };
+    animationFrameRef.current = requestAnimationFrame(render);
+  };
+
+  const startAnalysisLoop = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    intervalRef.current = setInterval(async () => {
+      const canvas = canvasRef.current;
+      if (!canvas || !streamRef.current) return;
+      
+      canvas.toBlob(async (blob) => {
+        if (!blob) return;
+        
+        const formData = new FormData();
+        formData.append('image', blob, 'live_frame.jpg');
+        
+        try {
+          const uploadRes = await fetch(`${API}/upload-image`, {
+            method: 'POST',
+            body: formData
+          });
+          if (!uploadRes.ok) return;
+          const uploadData = await uploadRes.json();
+          const fname = uploadData.filename;
+          
+          const checkRes = await fetch(`${API}/check-image`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: fname })
+          });
+          if (!checkRes.ok) return;
+          const checkData = await checkRes.json();
+          
+          if (checkData.regions && checkData.regions.length > 0) {
+            const mappedRegions = checkData.regions.map(r => {
+              const labelLower = r.label.toLowerCase();
+              const isIllegal = checkData.is_illegal || labelLower.includes('weapon') || labelLower.includes('hazard') || labelLower.includes('contraband');
+              return {
+                label: r.label,
+                x: r.x,
+                y: r.y,
+                w: r.w,
+                h: r.h,
+                confidence: checkData.confidence_score || 90,
+                isIllegal: isIllegal
+              };
+            });
+            
+            setDetectedRegions(mappedRegions);
+            
+            const illegalCount = mappedRegions.filter(r => r.isIllegal).length;
+            const sensitiveCount = mappedRegions.filter(r => !r.isIllegal).length;
+            setThreatCount(illegalCount);
+            setPiiCount(sensitiveCount);
+            
+            if (illegalCount > 0) {
+              setIsThreatActive(true);
+            }
+          } else {
+            setDetectedRegions([]);
+            setThreatCount(0);
+            setPiiCount(0);
+          }
+        } catch (err) {
+          console.error("Error analyzing camera frame:", err);
+        }
+      }, 'image/jpeg', 0.6);
+    }, 700);
+  };
+
   // ── Settings logic ─────────────────────────────────────────────────────────
   const saveSettings = async () => {
     try {
@@ -396,6 +597,25 @@ function App() {
     <div className="app">
       <div className="scanline" />
 
+      {/* Critical Threat Fullscreen Warning */}
+      {isThreatActive && (
+        <div className="critical-fullscreen-alarm">
+          <div className="alarm-flash-box">
+            <div className="alarm-flash-icon">🚨</div>
+            <h2 className="alarm-flash-title">CRITICAL SECURITY BREACH</h2>
+            <p className="alarm-flash-text">
+              WEAPON DETECTED IN CAMERA FEED. LOCAL PRIVACY PERIMETER ENGAGED.
+            </p>
+            <div className="alarm-flash-sub">
+              REDACTION SHIELD ACTIVE · TELEMETRY LOGGED
+            </div>
+            <button className="btn-confirm" onClick={() => setIsThreatActive(false)} style={{ marginTop: '20px' }}>
+              ACKNOWLEDGE WARNING
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Navbar */}
       <nav className="navbar">
         <div className="nav-brand">
@@ -412,6 +632,7 @@ function App() {
       <div className="tab-nav">
         {[
           { key: 'scan',     label: '🔍 SCANNER' },
+          { key: 'camera',   label: '🎥 LIVE GUARD' },
           { key: 'history',  label: '📋 HISTORY',  badge: history.length || null },
           { key: 'stats',    label: '📊 ANALYTICS' },
           { key: 'chat',     label: '🤖 AI CHAT' },
@@ -580,6 +801,121 @@ function App() {
               </section>
             )}
           </>
+        )}
+
+        {/* ── LIVE GUARD TAB ─────────────────────────────────────────────── */}
+        {activeTab === 'camera' && (
+          <section className={`panel camera-panel ${isThreatActive ? 'weapon-alarm-card' : ''}`}>
+            <div className="panel-label">🎥 LIVE GUARD WEBCAM SCREEN</div>
+
+            {isThreatActive && (
+              <div className="alarm-banner live-alarm">
+                <span className="alarm-icon">🚨</span>
+                <div>
+                  <div className="alarm-title">CRITICAL SAFETY THREAT DECLARED</div>
+                  <div className="alarm-desc">Visual weapon detection alert active! Real-time redacting applied.</div>
+                </div>
+              </div>
+            )}
+
+            <div className="camera-grid">
+              <div className="camera-feed-card">
+                <div className="img-card-header">
+                  LIVE CAPTURE &amp; REDACTION FEED
+                  <span style={{ float: 'right', color: isGuardActive ? 'var(--safe)' : 'var(--text-dim)' }}>
+                    ● {isGuardActive ? 'ACTIVE GUARD PROTOCOL' : 'STANDBY'}
+                  </span>
+                </div>
+                <div className="img-card-body camera-body">
+                  <video
+                    ref={videoRef}
+                    style={{ display: 'none' }}
+                    autoPlay
+                    playsInline
+                    muted
+                  />
+                  <canvas
+                    ref={canvasRef}
+                    width="640"
+                    height="480"
+                    style={{
+                      width: '100%',
+                      maxWidth: '640px',
+                      height: 'auto',
+                      borderRadius: '8px',
+                      border: '1px solid var(--border)',
+                      display: isGuardActive ? 'block' : 'none'
+                    }}
+                  />
+                  {!isGuardActive && (
+                    <div className="camera-placeholder" style={{ textAlign: 'center', padding: '40px 20px' }}>
+                      <div className="drop-icon" style={{ fontSize: '3rem', marginBottom: '15px' }}>📷</div>
+                      <div className="drop-title" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Camera Guard is Deactivated</div>
+                      <p style={{ color: 'var(--text-dim)', fontSize: '0.82rem', maxWidth: '400px', margin: '12px auto', lineHeight: '1.5' }}>
+                        Activate Live Guard to establish a local visual privacy perimeter. Weapon detection and PII scanning will run in real-time.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="camera-info-card">
+                <div className="img-card-header">GUARD DIAGNOSTICS &amp; THREATS</div>
+                <div className="img-card-body" style={{ display: 'block', padding: '20px' }}>
+                  <div style={{ marginBottom: '20px' }}>
+                    <button
+                      id="btn-toggle-camera"
+                      className={isGuardActive ? 'btn-danger' : 'btn-primary'}
+                      onClick={isGuardActive ? stopCamera : startCamera}
+                      style={{ width: '100%', padding: '14px', fontSize: '0.9rem', cursor: 'pointer' }}
+                    >
+                      {isGuardActive ? '🔴 DEACTIVATE LIVE GUARD' : '⚡ ACTIVATE LIVE GUARD'}
+                    </button>
+                  </div>
+
+                  <div className="metrics-grid" style={{ gridTemplateColumns: '1fr 1fr', gap: '10px', display: 'grid' }}>
+                    <div className="metric-box">
+                      <div className="metric-label">Threats Detected</div>
+                      <div className={`metric-value ${threatCount > 0 ? 'danger' : 'safe'}`}>
+                        {threatCount}
+                      </div>
+                    </div>
+                    <div className="metric-box">
+                      <div className="metric-label">PII Redactions</div>
+                      <div className="metric-value" style={{ color: 'var(--accent)' }}>
+                        {piiCount}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: '20px' }}>
+                    <div className="section-label">Active Redacted Items</div>
+                    <div className="ocr-box" style={{ minHeight: '120px', background: 'rgba(3, 8, 18, 0.8)' }}>
+                      {detectedRegions.length === 0 ? (
+                        <span className="placeholder">No threats or PII detected in view.</span>
+                      ) : (
+                        <ul style={{ margin: 0, paddingLeft: '20px', listStyleType: 'square' }}>
+                          {detectedRegions.map((r, idx) => (
+                            <li key={idx} style={{ color: r.isIllegal ? 'var(--danger)' : 'var(--warning)', marginBottom: '5px' }}>
+                              <strong>{r.label}</strong>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: '20px', fontSize: '0.75rem', color: 'var(--text-dim)', lineHeight: '1.5' }}>
+                    <div className="section-label">Redaction Status</div>
+                    <p>
+                      🎥 Zero-latency canvas filter blur is applied directly to detected bounding boxes.
+                      Frame telemetry scans the local backend node every 700ms.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         )}
 
         {/* ── HISTORY TAB ───────────────────────────────────────────────── */}
