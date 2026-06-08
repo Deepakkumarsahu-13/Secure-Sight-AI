@@ -1,5 +1,42 @@
 [
   {
+    "id": "2d91945c",
+    "timestamp": "2026-06-08T23:51:18",
+    "filename": "1780942876_images.jpg",
+    "original_name": "images.jpg",
+    "is_sensitive": true,
+    "is_illegal": true,
+    "illegal_type": "weapon",
+    "confidence": 99,
+    "document_type": "unknown",
+    "keywords": [
+      "weapon",
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 1,
+    "blurred": true,
+    "blurred_file": "blurred_1780942876_images.jpg"
+  },
+  {
+    "id": "7630cc28",
+    "timestamp": "2026-06-08T23:51:02",
+    "filename": "1780942858_download.jpg",
+    "original_name": "download.jpg",
+    "is_sensitive": true,
+    "is_illegal": true,
+    "illegal_type": "weapon",
+    "confidence": 99,
+    "document_type": "unknown",
+    "keywords": [
+      "weapon"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 2,
+    "blurred": true,
+    "blurred_file": "blurred_1780942858_download.jpg"
+  },
+  {
     "id": "6fe7c363",
     "timestamp": "2026-06-01T01:40:35",
     "filename": "1780258233_1743777362_new-project-1.jpg",
