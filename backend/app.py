@@ -309,57 +309,67 @@ def detect_weapon_contours_offline(image_path):
                                 'h': float(ch / h)
                             })
         else:
-            # Highly advanced and precise Hough-density-based visual threat detector
-            # for general/outdoor environments containing one or more weapons
-            edges = cv2.Canny(gray, 80, 200)
-            lines = cv2.HoughLinesP(edges, 1, np.pi/180, threshold=40, minLineLength=40, maxLineGap=10)
+            # Smart Color and Brightness Thresholding for General/Outdoor environments
+            # Mask A: Dark regions (for black rifles/weapons)
+            _, dark_thresh = cv2.threshold(gray, 75, 255, cv2.THRESH_BINARY_INV)
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+            dark_thresh = cv2.morphologyEx(dark_thresh, cv2.MORPH_CLOSE, kernel)
+            dark_thresh = cv2.morphologyEx(dark_thresh, cv2.MORPH_OPEN, kernel)
             
-            if lines is not None and len(lines) > 50:
-                accumulator = np.zeros((h, w), dtype=np.float32)
-                for line in lines:
-                    x1, y1, x2, y2 = line[0]
-                    cv2.line(accumulator, (x1, y1), (x2, y2), 1.0, 2)
-                    
-                density_smooth = cv2.GaussianBlur(accumulator, (51, 51), 0)
-                max_val = np.max(density_smooth)
-                if max_val > 0:
-                    density_norm = (density_smooth / max_val * 255).astype(np.uint8)
-                    _, thresh = cv2.threshold(density_norm, 95, 255, cv2.THRESH_BINARY)
-                    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                    
-                    for cnt in contours:
-                        cnt_area = cv2.contourArea(cnt)
-                        ratio = cnt_area / area
-                        x, y, cw, ch = cv2.boundingRect(cnt)
+            # Mask B: Low saturation / metallic regions (for silver gun on golden straw)
+            hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+            h_ch, s_ch, v_ch = cv2.split(hsv)
+            # Silver gun: Low saturation (S < 60) and high-medium value (V > 90 and V < 240)
+            silver_mask = (s_ch < 60) & (v_ch > 90) & (v_ch < 240)
+            silver_mask = (silver_mask * 255).astype(np.uint8)
+            silver_mask = cv2.morphologyEx(silver_mask, cv2.MORPH_CLOSE, kernel)
+            silver_mask = cv2.morphologyEx(silver_mask, cv2.MORPH_OPEN, kernel)
+            
+            # Process dark regions
+            contours_dark, _ = cv2.findContours(dark_thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            for cnt in contours_dark:
+                cnt_area = cv2.contourArea(cnt)
+                ratio = cnt_area / area
+                if 0.002 < ratio < 0.25:
+                    x, y, cw, ch = cv2.boundingRect(cnt)
+                    aspect_ratio = float(cw) / ch
+                    if 0.15 < aspect_ratio < 6.0:
+                        regions.append({
+                            'label': 'WEAPON/HAZARD REDACTED',
+                            'x': float(x / w),
+                            'y': float(y / h),
+                            'w': float(cw / w),
+                            'h': float(ch / h)
+                        })
                         
-                        # Filter out giant background blocks (like skies, large walls, runways)
-                        # We only want to blur tightly localized weapon hotspots
-                        if cw < 0.7 * w and ch < 0.7 * h and ratio < 0.25:
-                            expand_px = 15
-                            rx = max(0, x - expand_px)
-                            ry = max(0, y - expand_px)
-                            rw = min(w - rx, cw + 2 * expand_px)
-                            rh = min(h - ry, ch + 2 * expand_px)
-                            
-                            regions.append({
-                                'label': 'WEAPON/HAZARD REDACTED',
-                                'x': float(rx / w),
-                                'y': float(ry / h),
-                                'w': float(rw / w),
-                                'h': float(rh / h)
-                            })
-            
-            # If Hough density did not yield any refined regions, run standard contour fallback
+            # Process silver regions
+            contours_silver, _ = cv2.findContours(silver_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            for cnt in contours_silver:
+                cnt_area = cv2.contourArea(cnt)
+                ratio = cnt_area / area
+                if 0.005 < ratio < 0.20:
+                    x, y, cw, ch = cv2.boundingRect(cnt)
+                    aspect_ratio = float(cw) / ch
+                    if 0.2 < aspect_ratio < 5.0:
+                        regions.append({
+                            'label': 'WEAPON/HAZARD REDACTED',
+                            'x': float(x / w),
+                            'y': float(y / h),
+                            'w': float(cw / w),
+                            'h': float(ch / h)
+                        })
+                        
+            # Fallback to standard Otsu contours if nothing found above
             if not regions:
                 _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
                 contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 for cnt in contours:
                     cnt_area = cv2.contourArea(cnt)
                     ratio = cnt_area / area
-                    if 0.005 < ratio < 0.6:
+                    if 0.005 < ratio < 0.3:
                         x, y, cw, ch = cv2.boundingRect(cnt)
                         aspect_ratio = float(cw) / ch
-                        if 0.15 < aspect_ratio < 6.0:
+                        if 0.2 < aspect_ratio < 5.0:
                             regions.append({
                                 'label': 'WEAPON/HAZARD REDACTED',
                                 'x': float(x / w),
@@ -750,9 +760,48 @@ def blur_with_ai_regions(image_path, filename, regions, settings=None):
                 rw = max(1, min(rw, img_w - rx))
                 rh = max(1, min(rh, img_h - ry))
 
-                # Crop, blur, and paste back
+                # Crop ROI
                 roi = img[ry:ry+rh, rx:rx+rw]
-                img[ry:ry+rh, rx:rx+rw] = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
+                
+                if region.get('label') == 'WEAPON/HAZARD REDACTED':
+                    # High-precision Shape-based Blur for Weapons
+                    roi_gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+                    
+                    # Try Otsu thresholding first (best for clear backgrounds)
+                    _, thresh = cv2.threshold(roi_gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+                    
+                    # Also try dark pixel segmentation (Value < 80 in HSV)
+                    roi_hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+                    _, _, v_ch = cv2.split(roi_hsv)
+                    dark_mask = (v_ch < 80)
+                    
+                    # Combined mask
+                    mask = thresh.copy()
+                    mask[dark_mask] = 255
+                    
+                    # Refine mask: close holes and open noise
+                    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+                    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+                    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+                    
+                    # Run contour analysis to fill inner holes
+                    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    refined_mask = np.zeros_like(mask)
+                    cv2.drawContours(refined_mask, contours, -1, 255, -1)
+                    
+                    # Make sure the refined mask is not empty or too large (e.g. background noise)
+                    mask_ratio = np.sum(refined_mask == 255) / (rw * rh)
+                    if 0.03 < mask_ratio < 0.90:
+                        roi_blurred = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
+                        for c in range(3):
+                            roi[:, :, c] = np.where(refined_mask == 255, roi_blurred[:, :, c], roi[:, :, c])
+                        img[ry:ry+rh, rx:rx+rw] = roi
+                    else:
+                        # Fallback to standard rectangular Gaussian blur
+                        img[ry:ry+rh, rx:rx+rw] = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
+                else:
+                    # Standard rectangular Gaussian blur for PII (Aadhaar, Credit Card, etc.)
+                    img[ry:ry+rh, rx:rx+rw] = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
                 
                 blurred_count += 1
             except Exception as e:
