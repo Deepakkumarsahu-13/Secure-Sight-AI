@@ -1,5 +1,52 @@
 [
   {
+    "id": "6fe7c363",
+    "timestamp": "2026-06-01T01:40:35",
+    "filename": "1780258233_1743777362_new-project-1.jpg",
+    "original_name": "1743777362_new-project-1.jpg",
+    "is_sensitive": true,
+    "is_illegal": true,
+    "illegal_type": "weapon",
+    "confidence": 99,
+    "document_type": "Aadhaar Card",
+    "keywords": [
+      "weapon",
+      "dob",
+      "gender",
+      "aadhaar",
+      "bus",
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 4,
+    "blurred": true,
+    "blurred_file": "blurred_1780258233_1743777362_new-project-1.jpg"
+  },
+  {
+    "id": "f75e0992",
+    "timestamp": "2026-06-01T01:20:31",
+    "filename": "1780257027_Screenshot_2025-10-09_214427.png",
+    "original_name": "Screenshot_2025-10-09_214427.png",
+    "is_sensitive": true,
+    "is_illegal": true,
+    "illegal_type": "weapon",
+    "confidence": 99,
+    "document_type": "unknown",
+    "keywords": [
+      "weapon",
+      "gender",
+      "phone",
+      "email",
+      "name",
+      "bus",
+      "person"
+    ],
+    "method": "ocr-fallback",
+    "regions_count": 8,
+    "blurred": true,
+    "blurred_file": "blurred_1780257027_Screenshot_2025-10-09_214427.png"
+  },
+  {
     "id": "d1493131",
     "timestamp": "2026-05-31T23:37:58",
     "filename": "1780250877_1djfbkj.jpg",

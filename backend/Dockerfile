@@ -20,4 +20,4 @@ COPY . .
 
 # Expose port and run Waitress
 EXPOSE 5000
-CMD ["python", "-c", "from waitress import serve; from app import app; print('Waitress running on port 5000...'); serve(app, host='0.0.0.0', port=5000)"]
+CMD ["python", "-c", "import os; from waitress import serve; from app import app; port = int(os.environ.get('PORT', 5000)); print(f'Waitress running on port {port}...'); serve(app, host='0.0.0.0', port=port)"]
