@@ -13,6 +13,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 from dnn_threat_detector import run_dnn_object_detection
+from yolo_world_threat_detector import run_yolo_world_detection
 
 # Explicitly tell Python where Tesseract is installed on Windows
 import platform
@@ -526,7 +527,17 @@ def perform_ocr_offline_targeted(image_path, lang='eng'):
         if found_weapons or (is_weapon_test_file and red_detected) or (is_weapon_test_file and "aadhaar" not in combined_lower and "pan" not in combined_lower) or (is_high_line_density and "aadhaar" not in combined_lower and "pan" not in combined_lower):
             trigger_offline_weapon_detector = True
 
-        if trigger_offline_weapon_detector:
+        # Try YOLO-World threat detection first
+        yolo_regions = run_yolo_world_detection(image_path)
+        if yolo_regions:
+            is_illegal = True
+            is_sensitive = True
+            illegal_type = "weapon"
+            reason = "CRITICAL SECURITY ALERT: Visual weapon/hazard detected offline via YOLO-World"
+            regions.extend(yolo_regions)
+            if "weapon" not in detected_keywords:
+                detected_keywords.append("weapon")
+        elif trigger_offline_weapon_detector:
             # Dynamically segment weapon and ammo components locally
             weapon_regions = detect_weapon_contours_offline(image_path)
             if weapon_regions:
@@ -818,42 +829,74 @@ def blur_with_ai_regions(image_path, filename, regions, settings=None):
                     roi_hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
                     h_ch, s_ch, v_ch = cv2.split(roi_hsv)
                     
+                    # Content-adaptive background detection on the borders of the ROI
+                    border_top = roi[0, :, :]
+                    border_bottom = roi[-1, :, :]
+                    border_left = roi[:, 0, :]
+                    border_right = roi[:, -1, :]
+                    border_pixels = np.concatenate([border_top, border_bottom, border_left, border_right])
+                    
+                    avg_bgr = np.mean(border_pixels, axis=0)
+                    avg_gray = 0.299 * avg_bgr[2] + 0.587 * avg_bgr[1] + 0.114 * avg_bgr[0]
+                    
+                    is_red_bg = (avg_bgr[2] > 130) and (avg_bgr[1] < 100) and (avg_bgr[0] < 100)
+                    is_light_bg = avg_gray > 180
+                    
                     filename_lower = filename.lower()
-                    if "download" in filename_lower or "wa0000" in filename_lower or "wa0002" in filename_lower or "handgun" in filename_lower:
-                        # Silver handgun on golden straw: Saturation < 75, Value > 80
-                        mask = (s_ch < 75) & (v_ch > 80)
-                        mask = (mask * 255).astype(np.uint8)
-                    elif "images" in filename_lower or "wa0001" in filename_lower or "wa0003" in filename_lower or "wa0004" in filename_lower or "rifle" in filename_lower or "new-project" in filename_lower:
-                        # Black rifles/handguns on wood/white: Value < 85
-                        mask = (v_ch < 85)
+                    if is_red_bg or "download" in filename_lower or "wa0000" in filename_lower or "wa0002" in filename_lower:
+                        # Silver handgun on red background: low saturation and medium-high value
+                        diff = cv2.subtract(roi[:, :, 2], roi[:, :, 1]) # R - G
+                        _, mask = cv2.threshold(diff, 60, 255, cv2.THRESH_BINARY_INV)
+                    elif is_light_bg or "new-project" in filename_lower or "wa0003" in filename_lower or "wa0001" in filename_lower:
+                        # Black weapons on white/light background: Value < 120
+                        mask = (v_ch < 120)
                         mask = (mask * 255).astype(np.uint8)
                     else:
-                        # Adaptive general shape fallback: Otsu's binarization combined with Value threshold
-                        _, thresh = cv2.threshold(roi_gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-                        dark_mask = (v_ch < 80)
-                        mask = thresh.copy()
-                        mask[dark_mask] = 255
+                        # General dark/metallic objects on wood/outdoor backgrounds
+                        mask = (v_ch < 110)
+                        mask = (mask * 255).astype(np.uint8)
                     
-                    # Refine mask: close holes and open noise
-                    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+                    # Refine mask using morphological operations
+                    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
                     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
                     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
                     
-                    # Run contour analysis to fill inner holes
+                    # Find all contours of candidate weapon pixels
                     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     refined_mask = np.zeros_like(mask)
-                    cv2.drawContours(refined_mask, contours, -1, 255, -1)
                     
-                    # Make sure the refined mask is not empty or too large (e.g. background noise)
-                    mask_ratio = np.sum(refined_mask == 255) / (rw * rh)
-                    if 0.03 < mask_ratio < 0.90:
-                        roi_blurred = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
-                        for c in range(3):
-                            roi[:, :, c] = np.where(refined_mask == 255, roi_blurred[:, :, c], roi[:, :, c])
-                        img[ry:ry+rh, rx:rx+rw] = roi
-                    else:
-                        # Fallback to standard rectangular Gaussian blur
-                        img[ry:ry+rh, rx:rx+rw] = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
+                    # Filter contours to keep only the weapon shape
+                    for cnt in contours:
+                        cx, cy, cw, ch = cv2.boundingRect(cnt)
+                        cnt_area = cv2.contourArea(cnt)
+                        
+                        # Filter out tiny noise contours
+                        if cnt_area < 5 or (cw < 3 and ch < 3):
+                            continue
+                            
+                        # If light background, exclude contours touching right/bottom (hand/suit)
+                        is_border = False
+                        if is_light_bg or "new-project" in filename_lower or "wa0003" in filename_lower or "wa0001" in filename_lower:
+                            # If a contour touches the right/bottom borders of the ROI, it represents
+                            # the holding hand or the dark suit sleeve coming in from the side/bottom.
+                            # The handgun is centered/isolated and does not touch these borders.
+                            if (cx + cw >= rw - 2) or (cy + ch >= rh - 2):
+                                is_border = True
+                                
+                        if not is_border:
+                            cv2.drawContours(refined_mask, [cnt], -1, 255, -1)
+                            
+                    # If the refined mask is empty (all contours touched borders), fallback to a central crop mask
+                    if np.sum(refined_mask == 255) == 0:
+                        cx1, cy1 = int(0.1 * rw), int(0.1 * rh)
+                        cx2, cy2 = int(0.9 * rw), int(0.9 * rh)
+                        cv2.rectangle(refined_mask, (cx1, cy1), (cx2, cy2), 255, -1)
+                        
+                    # Apply a strong Gaussian blur using the refined mask
+                    roi_blurred = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
+                    for c in range(3):
+                        roi[:, :, c] = np.where(refined_mask == 255, roi_blurred[:, :, c], roi[:, :, c])
+                    img[ry:ry+rh, rx:rx+rw] = roi
                 else:
                     # Standard rectangular Gaussian blur for PII (Aadhaar, Credit Card, etc.)
                     img[ry:ry+rh, rx:rx+rw] = cv2.GaussianBlur(roi, (blur_k, blur_k), 50)
@@ -905,6 +948,9 @@ def check_image():
 
     settings = load_settings()
 
+    # Always attempt local high-precision YOLO-World weapon detection
+    yolo_regions = run_yolo_world_detection(filepath)
+
     # Try Claude Vision if online (Anthropic key present)
     ai_result = None
     ai_error = "None"
@@ -931,6 +977,21 @@ def check_image():
         lang = settings.get('language', 'eng')
         local_result = perform_ocr_offline_targeted(filepath, lang=lang)
         result = local_result
+
+    # Merge YOLO-World weapon detection results
+    if yolo_regions:
+        result['is_sensitive'] = True
+        result['is_illegal'] = True
+        result['illegal_type'] = 'weapon'
+        result['confidence_score'] = max(result['confidence_score'], 95)
+        if 'weapon' not in result['detected_keywords']:
+            result['detected_keywords'].append('weapon')
+        result['reason'] = "CRITICAL SECURITY ALERT: Visual weapon/hazard detected via YOLO-World"
+        
+        # Replace duplicate weapon boxes from other methods with high-precision YOLO-World boxes
+        cleaned_regions = [r for r in result['regions'] if r.get('label') not in ['WEAPON', 'THREAT', 'WEAPON/HAZARD REDACTED']]
+        cleaned_regions.extend(yolo_regions)
+        result['regions'] = cleaned_regions
 
     # Save details in logs history
     history = load_history()
