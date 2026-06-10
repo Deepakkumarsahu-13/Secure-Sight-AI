@@ -871,22 +871,10 @@ def blur_with_ai_regions(image_path, filename, regions, settings=None):
                         cnt_area = cv2.contourArea(cnt)
                         
                         # Filter out tiny noise contours
-                        if cnt_area < 5 or (cw < 3 and ch < 3):
-                            continue
-                            
-                        # If light background, exclude contours touching right/bottom (hand/suit)
-                        is_border = False
-                        if is_light_bg or "new-project" in filename_lower or "wa0003" in filename_lower or "wa0001" in filename_lower:
-                            # If a contour touches the right/bottom borders of the ROI, it represents
-                            # the holding hand or the dark suit sleeve coming in from the side/bottom.
-                            # The handgun is centered/isolated and does not touch these borders.
-                            if (cx + cw >= rw - 2) or (cy + ch >= rh - 2):
-                                is_border = True
-                                
-                        if not is_border:
+                        if cnt_area > 5:
                             cv2.drawContours(refined_mask, [cnt], -1, 255, -1)
                             
-                    # If the refined mask is empty (all contours touched borders), fallback to a central crop mask
+                    # If the refined mask is empty, fallback to a central crop mask
                     if np.sum(refined_mask == 255) == 0:
                         cx1, cy1 = int(0.1 * rw), int(0.1 * rh)
                         cx2, cy2 = int(0.9 * rw), int(0.9 * rh)
